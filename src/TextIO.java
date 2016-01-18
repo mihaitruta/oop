@@ -1,71 +1,52 @@
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class TextIO {
 	
-	public static int getInputInt(int first, int last) throws IOException {
-		
-		int userResponsea, userResponseb, input = 0;
-		
-		userResponsea = System.in.read();
-		
-		if(userResponsea != 13)
-			 input = input * 10 + userResponsea-48;
-		
-		while(userResponsea != 13){
-			userResponsea = System.in.read();
-			if(userResponsea != 13)
-				 input = input * 10 + userResponsea-48;
-		}
-		 
-		 userResponseb = System.in.read();
-		 
-		 if(input>=first && input<=last)
-			 return input;
-		 else {
-			 System.out.println("Invalid input");
-			 input = getInputInt(first,last);			 
-		 }
-
-		 
-		 return 0;
+	private Scanner input;
+	private static TextIO instance = null;
+	
+	private TextIO() {
+		input = new Scanner(System.in);
 	}
 	
-	
-	public static char getInputChar() throws IOException {
-		
-		int userResponsea, userResponseb;
-		boolean bad = true;
-		
-		char input = ' ';
-		
-		userResponsea = System.in.read();
-		
-		if(userResponsea != 13) {
-			 input = (char)userResponsea;
-			 bad = false;
-		}
-		
-		while(userResponsea != 13){
-			userResponsea = System.in.read();
-			if(userResponsea != 13)
-				bad = true;
-		}
-		 
-		 userResponseb = System.in.read();
-		 
-		 if( bad ) {
-			 System.out.println("Invalid input");
-			 input = getInputChar();			 
-		 } else {
-			 if((input - 'a' >=0) && ('z' - input >= 0))
-			 return input;
-		 }
-
-		 
-		 return '.';
+	public static TextIO getInstance() {
+		if(instance == null)
+			instance = new TextIO();
+		return instance;
 	}
 	
+	public int getInputInt(int first, int last) {
+		String in = input.nextLine();
+		int p = 0;
+		int i = 0;
+		int l = in.length();
+		char k;
+		for(i=0;i<l;i++) {
+			k = in.charAt(i);
+			if('0' <= k && k <= '9') 
+				p = p*10 + (int)(k - '0');
+			else
+				return -1;
+		}
+		if(p < first || p > last)
+			return -1;
+		return p;
+	}
+	
+	public char getInputChar() {
+		
+		String in = input.nextLine();
+		if(in.length() != 1)
+			return '.';
+		
+		char k = in.charAt(0);
+		
+		if('a' <= k && k <= 'z')
+			return k;
+		return '.';
+	}
 	
 	public static void showMenu() {
 		

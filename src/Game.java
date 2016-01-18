@@ -38,7 +38,9 @@ public class Game {
 	public static void play(String word) throws IOException {
 		
 		int lives = 8;
+		String cs = new String();
 		boolean guessed = false;
+		boolean badInput = false;
 		int i = 0;
 		char input;
 		boolean running = true;
@@ -60,7 +62,25 @@ public class Game {
 			System.out.println("Guess a letter...");
 			System.out.println(" ");
 			
-			input = TextIO.getInputChar();
+			input = TextIO.getInstance().getInputChar();
+			cs = "" + input;
+			if(input == '.' || letters.contains(cs))
+				badInput = true;
+			
+			while(badInput) {
+				badInput = false;
+				if(input == '.')
+					System.out.println("Invalid input. Try again.");
+				else
+					System.out.println("Letter already played. Try again.");
+				
+				input = TextIO.getInstance().getInputChar();
+				cs = "" + input;
+				
+				if(input == '.' || letters.contains(cs))
+					badInput = true;
+			}
+			
 			letters = letters + input + " ";
 			guessed = false;
 			for(i=0;i<l;i++) {

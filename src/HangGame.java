@@ -29,10 +29,20 @@ public class HangGame {
 			else
 				TextIO.showMenu2();
 			
-			if(menu)
-				input = TextIO.getInputInt(1, 2);
-			else
-				input = TextIO.getInputInt(1, 3);
+			if(menu) {
+				input = TextIO.getInstance().getInputInt(1, 2);
+				while(input == -1) {
+					System.out.println("Invalid input. Must be 1 or 2. Try again.");
+					input = TextIO.getInstance().getInputInt(1, 2);
+				}
+			}
+			else {
+				input = TextIO.getInstance().getInputInt(1, 3);
+				while(input == -1) {
+					System.out.println("Invalid input. Must be 1, 2 or 3. Try again.");
+					input = TextIO.getInstance().getInputInt(1, 3);
+				}
+			}
 			
 			
 			if(menu) {
@@ -51,7 +61,7 @@ public class HangGame {
 				if(input == 2) {
 					System.out.println(" ");
 					System.out.println("Choose length(between 2 and 45): ");
-					int k = TextIO.getInputInt(2, 45);
+					int k = TextIO.getInstance().getInputInt(2, 45);
 					Game.SetLengthGame(words,k);
 				}
 			}
